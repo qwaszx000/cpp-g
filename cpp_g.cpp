@@ -16,7 +16,7 @@ string replace_s(string str, string seach, string rep)
     return str;
 }
 
-void log_write(char* path, char* data)
+extern "C++" void log_write(char* path, char* data)
 {
     string d = data;
     FILE* f;
