@@ -21,17 +21,20 @@ void log_write(char* path, char* data)
     string d = data;
     FILE* f;
     f = fopen(path,"a");
+    
     for(int i = 0;i<66;i++)///Только по 1 символу меняет.
     {
         d = replace_s(d,byond_utf_c[i],normal_sim_c[i]);
     }
     data = (char*)d.c_str();
+    
     ///Get time
     time_t t = time(0);
     struct tm time_n;
     char time_now[128];
     time_n = *localtime(&t);
     strftime(time_now,sizeof(time_now),"%Y-%m-%d.%X", &time_n);
+    
     ///Output in file
     char data_out[1024];
     sprintf(data_out,"[%s]%s\n",time_now,data);
