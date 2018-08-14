@@ -16,7 +16,7 @@ string replace_s(string str, string seach, string rep)
     return str;
 }
 
-extern "C++"  __attribute__((visibility("default"))) void log_write(char* path, char* data)
+extern "C"  __attribute__((visibility("default"))) void log_write(char* path, char* data)
 {
     string d = data;
     FILE* f;
