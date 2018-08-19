@@ -20,7 +20,7 @@ extern "C"  __attribute__((visibility("default"))) void log_write(char* path, ch
 {
     string d = data;
     FILE* f;
-    f = fopen(path,"a");
+    f = fopen(path,"w");
     
     for(int i = 0;i<66;i++)///Только по 1 символу меняет.
     {
