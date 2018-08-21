@@ -17,7 +17,7 @@ string replace_s(string str, string seach, string rep)
     if(find_s <= str.size())
     {
         int e_pos = seach.size() + find_s; ///End pos
-        if(e_pos <= str.size())
+        if((size_t)e_pos <= str.size())
         {
             str.replace(find_s,e_pos, rep);
         }
@@ -29,7 +29,7 @@ vector<string> split(char* str, char* delim)
 {
     vector<string> v = {};
     char* s_t;
-    s_t = strtok(str,delim);
+    s_t = strtok(str,delim);///Stoping
     while (s_t != NULL)
     {
         string s_t_s = s_t;
@@ -42,30 +42,21 @@ vector<string> split(char* str, char* delim)
 extern "C" __declspec(dllexport) void log_write(char* path, char* data)
 {
     string d = data;
+    string s = path;
+    string dir_c;
     FILE* f;
     f = fopen(path,"a");
-
+    size_t pos,pre=0;
     if(f == NULL)
     {
-        vector<string> vdir = split(path, "/");
-        for(int i=0;i<(vdir.size()-1);i++)
+        while((pos = s.find_first_of("/",pre))!=std::string::npos)
         {
-            mkdir(vdir.data()[i].c_str());
-            chdir(vdir.data()[i].c_str());
+            dir_c = s.substr(0,pos++);
+            pre = pos;
+            if(dir_c.size() == 0) {continue;}
+            mkdir(dir_c.c_str());
         }
-        f = fopen(path, "a");
-
-        if(f == NULL)
-        {
-            vector<string> vdir = split(path, "\\");
-            for(int i=0;i<(vdir.size()-1);i++)
-            {
-                mkdir(vdir.data()[i].c_str());
-                chdir(vdir.data()[i].c_str());
-            }
-        }
-
-        f = fopen(path, "a");
+        f = fopen(path,"a");
     }
 
     if(f != NULL)
