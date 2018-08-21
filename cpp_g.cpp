@@ -4,7 +4,7 @@
 #include<string>
 #include<vector>
 #include<cstring>
-#include<dir.h>
+#include<io.h>
 using namespace std;
 
 
@@ -44,10 +44,30 @@ extern "C" __declspec(dllexport) void log_write(char* path, char* data)
     string d = data;
     FILE* f;
     f = fopen(path,"a");
-/*    if(f == NULL)
+
+    if(f == NULL)
     {
-        mkdir();
-    }*/
+        vector<string> vdir = split(path, "/");
+        for(int i=0;i<(vdir.size()-1);i++)
+        {
+            mkdir(vdir.data()[i].c_str());
+            chdir(vdir.data()[i].c_str());
+        }
+        f = fopen(path, "a");
+
+        if(f == NULL)
+        {
+            vector<string> vdir = split(path, "\\");
+            for(int i=0;i<(vdir.size()-1);i++)
+            {
+                mkdir(vdir.data()[i].c_str());
+                chdir(vdir.data()[i].c_str());
+            }
+        }
+
+        f = fopen(path, "a");
+    }
+
     if(f != NULL)
     {
         for(int i = 0;i<66;i++)///Только 1 раз 1 символ меняет
