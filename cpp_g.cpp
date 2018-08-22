@@ -39,8 +39,10 @@ vector<string> split(char* str, char* delim)
     return v;
 }
 
-extern "C" __declspec(dllexport) void log_write(char* path, char* data)
+extern "C" __declspec(dllexport) void log_write(int argc, char* argv[])///char* path, char* data)
 {
+    char *data = argv[1];
+    char *path = argv[0];
     string d = data;
     string s = path;
     string dir_c;
